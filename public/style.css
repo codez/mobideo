@@ -1,0 +1,116 @@
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+body {
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1.42857143;
+  color: #000;
+  background-color: #fff;
+  overflow-y: hidden;
+  position: relative;
+}
+
+#cam {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border: 20px solid black;
+  border-radius: 200px;
+  background-image: url(cam.svg);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 80.7%;
+}
+
+.custom-file {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 10px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  cursor: pointer;
+  display: block;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+#progress {
+  display: none;
+}
+
+.pie-wrapper {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  margin: auto;
+}
+
+.pie-wrapper .pie {
+  height: 100%;
+  width: 100%;
+  clip: rect(0, 200px, 200px, 100px);
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.pie-wrapper .pie .half-circle {
+  height: 100%;
+  width: 100%;
+  border: 20px solid #000;
+  border-radius: 50%;
+  clip: rect(0, 100px, 200px, 0);
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.pie-wrapper .label {
+  font-size: 50px;
+  border-radius: 50%;
+  bottom: 20px;
+  color: #000;
+  cursor: default;
+  display: block;
+  left: 20px;
+  line-height: 145px;
+  position: absolute;
+  right: 20px;
+  text-align: center;
+  top: 20px;
+  background: none;
+}
+
+.pie-wrapper .label .smaller {
+  font-size: .45em;
+  padding-bottom: 20px;
+  vertical-align: super;
+}
+
+.pie-wrapper .shadow {
+  height: 100%;
+  width: 100%;
+  border: 20px solid #bdc3c7;
+  border-radius: 50%;
+}

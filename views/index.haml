@@ -1,0 +1,16 @@
+%p
+  Video aufnehmen
+
+%form#form{action: '/', method: 'POST', enctype: 'multipart/form-data'}
+  .custom-file
+    #cam
+    %input{type: 'file', id: 'file', name: 'video', accept: 'video/*', capture: true}
+
+#progress
+  .pie-wrapper
+    %span.label
+      <span id="progress-number">0</span><span class="smaller">%</span>
+    #pie.pie
+      #left-side.half-circle
+      #right-side.half-circle
+    .shadow
