@@ -1,6 +1,10 @@
-require 'sinatra'
+require 'rubygems'
+require 'bundler'
+
+Bundler.require
 
 set :bind, '0.0.0.0'
+set :server, :puma
 set :haml, format: :html5
 
 ENV['APP_VIDEO_FOLDER'] = './videos' if ENV['APP_VIDEO_FOLDER'].nil?

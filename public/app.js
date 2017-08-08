@@ -1,51 +1,83 @@
-MAX_FILE_SIZE = 10000000;
+MAX_FILE_SIZE = 100000000;
 
-var uploadFile = function(e) {
+var el = function(id) {
+  return document.getElementById(id);
+}
+
+var prepareUpload = function(e) {
   var file = e.target.files[0];
+	if (!(new XMLHttpRequest()).upload) {
+    el('message').innerHTML = 'Dein Gerät wird leider nicht unterstützt.';
+  } else if (file.size > MAX_FILE_SIZE) {
+    el('message').innerHTML = 'Dein Video ist zu lang. Bitte beschränke dich auf 30 Sekunden.';
+  } else {
+    uploadFile(file);
+  }
+}
 
-	var xhr = new XMLHttpRequest();
-	if (xhr.upload && file.size <= MAX_FILE_SIZE) {
-    // progress bar
-		xhr.upload.addEventListener("progress", function(e) {
-			var percent = parseInt(100 - (e.loaded / e.total * 100));
+var uploadFile = function(file) {
+  var xhr = new XMLHttpRequest();
+  // listen to progress
+	xhr.upload.addEventListener('progress', function(e) {
+    if (e.lengthComputable) {
+  		var percent = parseInt(e.loaded / e.total * 100);
       drawProgress(percent);
-		}, false);
+    }
+	}, false);
 
-    // file received/failed
-		xhr.onreadystatechange = function(e) {
-			if (xhr.readyState == 4) {
-				progress.className = (xhr.status == 200 ? "success" : "failure");
-			}
-		};
+  // file received/failed
+	xhr.onreadystatechange = function(e) {
+		if (xhr.readyState === 4) {
+      setCompleted(xhr.status);
+		}
+	};
 
-		// start upload
-    var form = document.getElementById('form');
-		xhr.open("POST", form.action, true);
-    var formData = new FormData();
-    formData.append('video', file, file.name);
-		xhr.send(formData);
-    form.style.display = 'none';
-    
-		var progress = document.getElementById("progress");
-    progress.style.display = 'block';
-	}
+	// start upload
+  var form = el('form');
+	xhr.open('POST', form.action, true);
+  var formData = new FormData();
+  formData.append('video', file, file.name);
+	xhr.send(formData);
+
+  form.style.display = 'none';
+  el('progress').style.display = 'block';
+  el('message').innerHTML = '';
 }
 
 var drawProgress = function(percent) {
   if (percent <= 50) {
-    document.getElementById('right-side').style.display = 'none';
-    document.getElementById('pie').style.clip = 'rect(0, 200px, 200px, 100px)';
+    el('right-side').style.display = 'none';
+    el('pie').style.clip = 'rect(0, 200px, 200px, 100px)';
   } else {
-    document.getElementById('right-side').style.display = 'block';
-    document.getElementById('right-side').style.transform = 'rotate(180deg)';
-    document.getElementById('pie').style.clip = 'rect(auto, auto, auto, auto)';
+    el('right-side').style.display = 'block';
+    el('right-side').style.transform = 'rotate(180deg)';
+    el('pie').style.clip = 'rect(auto, auto, auto, auto)';
   }
-  document.getElementById('left-side').style.transform = 'rotate(' + (percent * 3.6) + 'deg)';
-  document.getElementById('progress-number').innerHTML = percent;
+  el('left-side').style.transform = 'rotate(' + (percent * 3.6) + 'deg)';
+  el('progress-number').innerHTML = percent;
+}
+
+var setCompleted = function(status) {
+  var progress = el('progress');
+  var message = el('message');
+  drawProgress(100);
+  if (status === 200) {
+    progress.className = 'success';
+    message.innerHTML = 'Merci beaucoup! Dein Video wurde hinzugefügt.';
+  } else {
+    progress.className = 'failure';
+    message.innerHTML = 'Hoppla, das hat leider nicht geklappt. ' +
+                        'Versuch es später nochmals oder sonst mit einem anderen Gerät.';
+  }
+  setTimeout(function() {
+    el('form').style.display = 'block';
+    progress.style.display = 'none';
+    progress.className = null;
+    }, 5000);
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById('file').addEventListener('change', uploadFile, false);
+  el('file').addEventListener('change', prepareUpload, false);
   var percent = 0;
   // setInterval(function() { drawProgress(percent++ % 100) }, 100);
 });

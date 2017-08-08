@@ -57,6 +57,7 @@ body {
 
 #progress {
   display: none;
+  margin-bottom: 8px;
 }
 
 .pie-wrapper {
@@ -84,6 +85,14 @@ body {
   left: 0;
   position: absolute;
   top: 0;
+}
+
+.success .pie-wrapper .pie .half-circle {
+  border-color: green;
+}
+
+.failure .pie-wrapper .pie .half-circle {
+  border-color: red;
 }
 
 .pie-wrapper .label {
