@@ -27,21 +27,23 @@ var uploadFile = function(file) {
 
   // file received/failed
 	xhr.onreadystatechange = function(e) {
+    console.log(xhr);
 		if (xhr.readyState === 4) {
       setCompleted(xhr.status);
 		}
 	};
 
-	// start upload
+  // show progress
   var form = el('form');
+  form.style.display = 'none';
+  el('progress').style.display = 'block';
+  el('message').innerHTML = '';
+
+  // start upload
 	xhr.open('POST', form.action, true);
   var formData = new FormData();
   formData.append('video', file, file.name);
 	xhr.send(formData);
-
-  form.style.display = 'none';
-  el('progress').style.display = 'block';
-  el('message').innerHTML = '';
 }
 
 var drawProgress = function(percent) {
@@ -60,8 +62,8 @@ var drawProgress = function(percent) {
 var setCompleted = function(status) {
   var progress = el('progress');
   var message = el('message');
-  drawProgress(100);
-  if (status === 200) {
+  if (status === 200 || status === 201) {
+    drawProgress(100);
     progress.className = 'success';
     message.innerHTML = 'Merci beaucoup! Dein Video wurde hinzugefügt.';
   } else {
