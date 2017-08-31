@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (2.2.1)
     haml (5.0.2)
       temple (>= 0.8.0)
       tilt
@@ -21,9 +22,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   haml
   puma
   sinatra
 
 BUNDLED WITH
-   1.14.6
+   1.15.4

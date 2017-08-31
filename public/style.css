@@ -17,6 +17,25 @@ body {
   position: relative;
 }
 
+
+@media only screen and (max-width: 960px) {
+  #info {
+    margin-top: 24px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #info {
+    margin-top: 50px;
+  }
+}
+
+@media only screen and (min-width: 961px) {
+  #info {
+    margin-top: 50px;
+  }
+}
+
 #cam {
   display: inline-block;
   width: 200px;

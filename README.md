@@ -13,6 +13,10 @@ Run
 
 Then, goto http://localhost:4567 in your browser.
 
+## Forward Port 80 to 4567
+
+    sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 4567
+    sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 4567
 
 ## Copyright
 
