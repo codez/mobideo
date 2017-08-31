@@ -1,4 +1,4 @@
-MAX_FILE_SIZE = 100000000;
+MAX_FILE_SIZE = 2 ** 30 / 10; // 100 MB
 
 var el = function(id) {
   return document.getElementById(id);
@@ -9,7 +9,7 @@ var prepareUpload = function(e) {
 	if (!(new XMLHttpRequest()).upload) {
     el('message').innerHTML = 'Dein Gerät wird leider nicht unterstützt.';
   } else if (file.size > MAX_FILE_SIZE) {
-    el('message').innerHTML = 'Dein Video ist zu lang. Bitte beschränke dich auf 30 Sekunden.';
+    el('message').innerHTML = 'Dein Video ist zu lang. Bitte beschränke dich auf eine Minute.';
   } else {
     uploadFile(file);
   }
